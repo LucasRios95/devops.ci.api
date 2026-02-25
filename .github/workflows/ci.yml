@@ -9,17 +9,19 @@ jobs:
   build: 
     name: 'Build and Push'
     runs-on: ubuntu-latest
-    strategy:
-      matrix: 
-        node: [ 18, 20, 24 ]
+    # strategy:
+    #   matrix: 
+    #     node: [ 18, 20, 24 ]
 
     steps: 
     - uses: actions/checkout@v6
 
-    - name: Setup node | ${{matrix.node}}
+    #  - name: Setup node | ${{matrix.node}}
+    - name: Setup node
       uses: actions/setup-node@v6
       with:
-        node-version: ${{matrix.node}}
+        # node-version: ${{matrix.node}}
+        node-version: 24
         cache: 'npm'
     - run: npm i
     - run: npm run test
@@ -36,9 +38,14 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    - name: Build and Push
+      uses: docker/build-push-action@v6
+      with: 
+        push: true
+        tags: lucashrios95/api-ci:${{ steps.generate_tag.outputs.sha }}, lucashrios95/api-ci:latest
+    # - name: Build Docker Image
+    #   run: docker build -t lucashrios95/api-ci:${{ steps.generate_tag.outputs.sha }} .
 
-    - name: Build Docker Image
-      run: docker build -t lucashrios95/api-ci:${{ steps.generate_tag.outputs.sha }} .
+    # - name: Push Image
+    #   run: docker push lucashrios95/api-ci:${{ steps.generate_tag.outputs.sha }}
 
-    - name: Push Image
-      run: docker push lucashrios95/api-ci:${{ steps.generate_tag.outputs.sha }}
