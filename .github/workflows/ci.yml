@@ -58,14 +58,16 @@ jobs:
         echo "sha=$IMAGE" >> $GITHUB_OUTPUT
     
     - name: Deploy to App Runner
-      env:
-        IMAGE: ${{ steps.build-docker-image.outputs.sha }}
-      run: |
-        SERVICE_ARN=$(aws apprunner list-services --region us-east-2 --query "ServiceSummaryList[?ServiceName=='devops-ci-api'].ServiceArn" --output text)
-        aws apprunner update-service \
-          --region us-east-2 \
-          --service-arn $SERVICE_ARN \
-          --source-configuration "{\"ImageRepository\":{\"ImageIdentifier\":\"$IMAGE\",\"ImageRepositoryType\":\"ECR\",\"ImageConfiguration\":{\"Port\":\"3000\"}}}"
+      uses: awslabs/amazon-app-runner-deploy@main
+      with:
+        service: devops-ci-api
+        image: ${{ steps.build-docker-image.outputs.image }}
+        access-role-arn: arn:aws:iam::751647213111:role/app-runner-role
+        source-connection-arn: arn:aws:apprunner:us-east-2:751647213111:service/devops-ci-api/1b8e69c700564ed0b412c6396f76f37f
+        region: us-east-2
+        cpu: 1
+        memory: 2
+        port: 3000
 
 
 
