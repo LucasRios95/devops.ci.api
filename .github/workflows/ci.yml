@@ -47,12 +47,26 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v2
 
     - name: Build Docker Image
+      id: build-docker-image
       env: 
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           TAG: ${{ steps.generate_tag.outputs.sha }}
       run: |
         docker build -t $REGISTRY/devops-ci:$TAG .
         docker push $REGISTRY/devops-ci:$TAG
+        IMAGE=$(echo $REGISTRY/devops-ci:$TAG)
+        echo "sha=$IMAGE" >> $GITHUB_OUTPUT
+    
+    - name: Deploy to App Runner
+      uses: awslabs/amazon-app-runner-deploy@main
+      with:
+        service: devops.ci.api
+        image: ${{ steps.build-docker-image.outputs.image }}
+        access-role-arn: arn:aws:iam::751647213111:role/app-runner-role
+        region: us-east-2
+        cpu: 1
+        memory: 1
+        port: 3000
 
 
 
