@@ -63,7 +63,7 @@ jobs:
         service: devops-ci-api
         image: ${{ steps.build-docker-image.outputs.image }}
         access-role-arn: arn:aws:iam::751647213111:role/app-runner-role
-        source-connection-arn: arn:aws:apprunner:us-east-2:751647213111:service/devops-ci-api/1b8e69c700564ed0b412c6396f76f37f
+        source-connection-arn: arn:aws:apprunner:us-east-2:751647213111:connection/devops-ci/148b4c1ef65f40d9b8c5fa33cc026139
         region: us-east-2
         cpu: 1
         memory: 2
