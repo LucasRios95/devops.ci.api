@@ -60,14 +60,14 @@ jobs:
     - name: Deploy to App Runner
       uses: awslabs/amazon-app-runner-deploy@main
       with:
-        service: devops-ci-api
+        service: app-runner-git-deploy-service
         image: ${{ steps.build-docker-image.outputs.image }}
         access-role-arn: arn:aws:iam::751647213111:role/app-runner-role
-        source-connection-arn: arn:aws:apprunner:us-east-2:751647213111:connection/devops-ci/148b4c1ef65f40d9b8c5fa33cc026139
         region: us-east-2
         cpu: 1
         memory: 2
         port: 3000
+        wait-for-service-stability-seconds: 1200
 
 
 
