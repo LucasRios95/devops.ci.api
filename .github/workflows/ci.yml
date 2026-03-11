@@ -13,6 +13,9 @@ jobs:
   build: 
     name: 'Build and Push'
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     # strategy:
     #   matrix: 
     #     node: [ 18, 20, 24 ]
@@ -60,8 +63,8 @@ jobs:
     - name: Deploy to App Runner
       uses: awslabs/amazon-app-runner-deploy@main
       with:
-        service: app-runner-git-deploy-service
-        image: ${{ steps.build-docker-image.outputs.image }}
+        service: devops-ci-api
+        image: ${{ steps.build-docker-image.outputs.sha }}
         access-role-arn: arn:aws:iam::751647213111:role/app-runner-role
         region: us-east-2
         cpu: 1
