@@ -65,7 +65,7 @@ jobs:
       run: |
         docker build -t $REGISTRY/devops-ci:$TAG .
         docker tag $REGISTRY/devops-ci:$TAG $REGISTRY/devops-ci:latest
-        docker push --all-tags $REGISTRY/devops-ci:latest
+        docker push --all-tags $REGISTRY/devops-ci
         IMAGE=$(echo $REGISTRY/devops-ci:$TAG)
         echo "sha=$IMAGE" >> $GITHUB_OUTPUT
     
