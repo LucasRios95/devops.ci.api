@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/LucasRios95/devops.ci.api/compare/v1.0.1...v1.0.2) (2026-03-29)
+
+
+### Bug Fixes
+
+* fix push for tag latest ([8874bea](https://github.com/LucasRios95/devops.ci.api/commit/8874bea950b4688aea399ef54166396592604837))
+
 ## [1.0.1](https://github.com/LucasRios95/devops.ci.api/compare/v1.0.0...v1.0.1) (2026-03-29)
 
 
