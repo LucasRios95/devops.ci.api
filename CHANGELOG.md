@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/LucasRios95/devops.ci.api/compare/v1.0.0...v1.0.1) (2026-03-29)
+
+
+### Bug Fixes
+
+* fix ci variables ([2da25da](https://github.com/LucasRios95/devops.ci.api/commit/2da25da05fb2e38721e3068ae6b4cdeea091e3bb))
+
 # 1.0.0 (2026-03-16)
 
 
